@@ -30,12 +30,16 @@ function Table(props) {
 
 
     return (
-        <table id="customers">
+        <div>
+            <div id="search">
              <input
           ref={inputRef}
           placeholder="Search by name"
           onChange={filterByInput}
         />
+             </div><br></br>
+        <table id="customers">
+             
             <tr>
                 <th>Visage</th>
                 <th onClick={sortByName}>Name</th>
@@ -56,6 +60,7 @@ function Table(props) {
                 )
             })}
         </table>
+        </div>
     )
 }
 

@@ -10,12 +10,6 @@ function App() {
   
   useEffect(() => {
     axios.get(queryURL)
-      // .then(function (res) {
-      //   console.log("inside axios");
-      //   console.log(res.data.results);
-      //   console.log(res.data.results[0].name.first, res.data.results[0].name.last);
-
-      // });
       .then(res => {
         setUsers(res.data.results);
       });
@@ -27,7 +21,6 @@ function App() {
   return (
     <div>
       <Header title="Your Employees" />
-      {/* <Table users={users}/> */}
       <Table users={users} />
     </div>
   );
