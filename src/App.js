@@ -6,8 +6,8 @@ import './App.css';
 
 function App() {
   const [users, setUsers] = useState([]);
-  const queryURL = "https://randomuser.me/api/?results=5";
-
+  const queryURL = "https://randomuser.me/api/?results=10";
+  
   useEffect(() => {
     axios.get(queryURL)
       // .then(function (res) {
@@ -21,11 +21,13 @@ function App() {
       });
   }, [])
 
+  
+  
   return (
     <div>
       <Header title="Your Employees" />
       {/* <Table users={users}/> */}
-      <Table users={users}/>
+      <Table users={users} />
     </div>
   );
 }
