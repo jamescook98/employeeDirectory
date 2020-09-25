@@ -8,7 +8,7 @@ function Table() {
     const [users, setUsers] = useState([]);
     const [ascend, setAscend] = useState(0);
     const [input, setInput] = useState("");
-    const queryURL = "https://randomuser.me/api/?results=10";
+    const queryURL = "https://randomuser.me/api/?results=20";
   
     useEffect(() => {
       axios.get(queryURL)
@@ -23,11 +23,8 @@ function Table() {
         let sortedUsers = [];
         if (ascend % 2 == 0){
             sortedUsers = users.sort((a, b) => (a.name.first > b.name.first) ? 1 : -1); 
-            console.log("should be odd now"+sortedUsers);
-            
         } else {
             sortedUsers = users.sort((a, b) => (a.name.first < b.name.first) ? 1 : -1);
-            console.log(sortedUsers);
         }
         setAscend(ascend + 1); 
         setUsers(sortedUsers);
@@ -47,11 +44,11 @@ function Table() {
             <tr>
                 <th>Visage</th>
                 <th onClick={sortByName}>Name</th>
-                <th>Email</th>
+                <th onClick={sortByName}>Email</th>
                 <th>Work</th>
                 <th>Cell</th>
             </tr>
-            {users.filter(user => !input || user.name.first.includes(input)).map((user, i) => {
+            {users.filter(user => !input || user.name.first.toLowerCase().includes(input)).map((user, i) => {
                 return (
                     <TableRow
                         key={i}
