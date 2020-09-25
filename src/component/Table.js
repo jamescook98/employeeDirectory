@@ -48,7 +48,7 @@ function Table() {
                 <th>Work</th>
                 <th>Cell</th>
             </tr>
-            {users.filter(user => !input || user.name.first.toLowerCase().includes(input)).map((user, i) => {
+            {users.filter(user => !input || user.name.first.toLowerCase().includes(input) || user.name.last.toLowerCase().includes(input)).map((user, i) => {
                 return (
                     <TableRow
                         key={i}
