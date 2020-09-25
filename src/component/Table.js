@@ -1,30 +1,35 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import TableRow from "./TableRow/TableRow.js"
 import '../component/Table.css';
+import axios from "axios";
 
-function Table(props) {
+function Table() {
     const inputRef = useRef();
     const [users, setUsers] = useState([]);
+    const [ascend, setAscend] = useState(0);
+    const [input, setInput] = useState("");
+    const queryURL = "https://randomuser.me/api/?results=10";
+  
+    useEffect(() => {
+      axios.get(queryURL)
+        .then(res => {
+          setUsers(res.data.results);
+        });
+    }, [])
 
-    function filterByInput(){
-        let filteredUsers = props.users.filter(a => a.name.first.includes(inputRef.current.value));
-        console.log(filteredUsers);
-        setUsers(filteredUsers);
-    }
 
-    var ascendDescend = 0;
+
     function sortByName() {
         let sortedUsers = [];
-        if (ascendDescend % 2 == 0){
-            sortedUsers = props.users.sort((a, b) => (a.name.first > b.name.first) ? 1 : -1); 
-            ascendDescend++; 
-            console.log("should be odd now"+ascendDescend);
+        if (ascend % 2 == 0){
+            sortedUsers = users.sort((a, b) => (a.name.first > b.name.first) ? 1 : -1); 
+            console.log("should be odd now"+sortedUsers);
             
         } else {
-            sortedUsers = props.users.sort((a, b) => (a.name.first < b.name.first) ? 1 : -1);
-            ascendDescend++;
-            console.log(ascendDescend);
+            sortedUsers = users.sort((a, b) => (a.name.first < b.name.first) ? 1 : -1);
+            console.log(sortedUsers);
         }
+        setAscend(ascend + 1); 
         setUsers(sortedUsers);
     }
 
@@ -35,11 +40,10 @@ function Table(props) {
              <input
           ref={inputRef}
           placeholder="Search by name"
-          onChange={filterByInput}
+          onChange={() => setInput(inputRef.current.value)}
         />
              </div><br></br>
         <table id="customers">
-             
             <tr>
                 <th>Visage</th>
                 <th onClick={sortByName}>Name</th>
@@ -47,7 +51,7 @@ function Table(props) {
                 <th>Work</th>
                 <th>Cell</th>
             </tr>
-            {props.users.map((user, i) => {
+            {users.filter(user => !input || user.name.first.includes(input)).map((user, i) => {
                 return (
                     <TableRow
                         key={i}
